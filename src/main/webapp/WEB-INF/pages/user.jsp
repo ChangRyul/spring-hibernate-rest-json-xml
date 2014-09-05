@@ -1,5 +1,5 @@
 <html>
 <body>
-	<h2>User name is ${name}</h2>
+	<h2>User ${user.id}: ${user.firstName} ${user.lastName}</h2>
 </body>
 </html>

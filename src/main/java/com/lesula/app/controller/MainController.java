@@ -11,7 +11,7 @@ public class MainController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
-		model.addAttribute("message", "Hello world!");
+		model.addAttribute("message", "Hello lesula!");
 		return "hello";
 	}
 
