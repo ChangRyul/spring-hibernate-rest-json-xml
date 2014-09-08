@@ -31,21 +31,36 @@
 
     <context:property-placeholder location="classpath:db.properties" />
 
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+    <!--<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}" />
         <property name="url" value="${jdbc.url}" />
         <property name="username" value="${jdbc.username}" />
         <property name="password" value="${jdbc.password}" />
+    </bean>-->
+
+    <bean id="c3p0DataSource" class = "com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbc.driverClassName}" />
+        <property name="jdbcUrl" value="${jdbc.url}" />
+        <property name="user" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+
+        <!-- these are C3P0 properties -->
+        <property name="acquireIncrement" value="${c3p0.acquireIncrement}" />
+        <property name="minPoolSize" value="${c3p0.minPoolSize}" />
+        <property name="maxPoolSize" value="${c3p0.maxPoolSize}" />
+        <property name="maxIdleTime" value="${c3p0.idleTestPeriod}" />
+        <property name="maxStatements" value="${c3p0.maxStatements}" />
+        <property name="loginTimeout" value="${c3p0.timeout}" />
     </bean>
 
-    <jdbc:initialize-database data-source="dataSource">
+    <jdbc:initialize-database data-source="c3p0DataSource">
         <jdbc:script location="classpath:startup.sql"/>
     </jdbc:initialize-database>
 
 
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="c3p0DataSource" />
 
         <property name="packagesToScan">
             <list>
@@ -74,15 +89,6 @@
                 <!-- second level cache -->
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
                 <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
-
-                <!--hibernate-managed c3p0 settings-->
-                <!--<prop key="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</prop>
-                <prop key="hibernate.c3p0.acquire_increment">${c3p0.acquireIncrement}</prop>
-                <prop key="hibernate.c3p0.min_size">${c3p0.minPoolSize}</prop>
-                <prop key="hibernate.c3p0.max_size">${c3p0.maxPoolSize}</prop>
-                <prop key="hibernate.c3p0.idle_test_period">${c3p0.idleTestPeriod}</prop>
-                <prop key="hibernate.c3p0.max_statements">${c3p0.maxStatements}</prop>
-                <prop key="hibernate.c3p0.timeout">${c3p0.timeout}</prop>-->
 
             </props>
         </property>
