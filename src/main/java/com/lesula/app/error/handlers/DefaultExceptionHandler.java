@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class DefaultExceptionHandler {
 
-    private final static String DEFAULT_ERROR_VIEW_NAME = "error";
-
     @ExceptionHandler(value=Exception.class)
     public @ResponseBody ErrorResponse unknownExceptionHandler(HttpServletRequest request, Exception e){
         ErrorResponse errorResponse = new ErrorResponse();
