@@ -1,5 +1,6 @@
 package com.lesula.app.service;
 
+import com.lesula.app.error.UserNotFoundException;
 import com.lesula.app.domain.dao.UserDAO;
 import com.lesula.app.domain.tables.User;
 import com.lesula.app.dto.response.UserResponse;
@@ -16,18 +17,19 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
 
-    @Transactional(readOnly = true)
-    public UserResponse getUserDetails(int userId){
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public UserResponse getUserDetails(int userId) throws UserNotFoundException {
         User dbUser = userDAO.findById(userId);
 
-        if(dbUser != null){
-            UserResponse userResponse = new UserResponse();
-            userResponse.setFirstName(dbUser.getFirstName());
-            userResponse.setLastName(dbUser.getLastName());
-            userResponse.setId(dbUser.getId());
-            return userResponse;
+        if(dbUser == null){
+            throw new UserNotFoundException(userId);
         }
 
-        return null;
+        UserResponse userResponse = new UserResponse();
+        userResponse.setFirstName(dbUser.getFirstName());
+        userResponse.setLastName(dbUser.getLastName());
+        userResponse.setId(dbUser.getId());
+        return userResponse;
+
     }
 }

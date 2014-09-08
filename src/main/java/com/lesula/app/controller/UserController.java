@@ -20,8 +20,8 @@ public class UserController {
 
     @RequestMapping(value="/{userId}.htm", method=RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public String getUserHtml(ModelMap map, @PathVariable int userId){
-        UserResponse userDetails = userService.getUserDetails(userId);
+    public String getUserHtml(ModelMap map, @PathVariable int userId) throws Exception{
+        UserResponse userDetails = getUserApi(userId);
         map.put("user", userDetails);
         return "user";
     }
@@ -29,7 +29,7 @@ public class UserController {
     @RequestMapping(value="/{userId}",
             method=RequestMethod.GET, produces={"application/xml", "application/json"})
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody UserResponse getUserApi(@PathVariable int userId){
+    public @ResponseBody UserResponse getUserApi(@PathVariable int userId) throws Exception{
         UserResponse userDetails = userService.getUserDetails(userId);
         return userDetails;
     }
