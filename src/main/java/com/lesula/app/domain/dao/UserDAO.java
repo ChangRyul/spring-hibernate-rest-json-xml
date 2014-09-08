@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * Created by enrico on 9/5/14.
  */
 @Repository
-public class UserDAO extends MainDAO<User, Integer> {
+public class UserDAO extends MainDAO<User, Integer> implements IUserDAO{
 
     @Autowired
     public UserDAO(SessionFactory sessionFactory) {

@@ -1,7 +1,7 @@
 package com.lesula.app.controller;
 
 import com.lesula.app.dto.response.UserResponse;
-import com.lesula.app.service.UserService;
+import com.lesula.app.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    IUserService userService;
 
     @RequestMapping(value="/{userId}.htm", method=RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)

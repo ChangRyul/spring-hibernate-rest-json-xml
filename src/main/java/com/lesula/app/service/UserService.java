@@ -1,9 +1,9 @@
 package com.lesula.app.service;
 
-import com.lesula.app.error.UserNotFoundException;
-import com.lesula.app.domain.dao.UserDAO;
+import com.lesula.app.domain.dao.IUserDAO;
 import com.lesula.app.domain.tables.User;
 import com.lesula.app.dto.response.UserResponse;
+import com.lesula.app.error.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by enrico on 9/5/14.
  */
 @Service
-public class UserService {
+public class UserService implements IUserService{
 
     @Autowired
-    private UserDAO userDAO;
+    private IUserDAO userDAO;
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public UserResponse getUserDetails(int userId) throws UserNotFoundException {
