@@ -25,6 +25,7 @@
         <junit.version>4.11</junit.version>
         <mysql-connector-java.version>5.1.17</mysql-connector-java.version>
         <jackson.version>1.9.13</jackson.version>
+        <mockito-core.version>1.9.5</mockito-core.version>
     </properties>
 
     <dependencies>
@@ -129,6 +130,13 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito-core.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -144,8 +152,8 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
             <plugin>
