@@ -133,6 +133,13 @@
 
     <build>
         <finalName>lesula-rest</finalName>
+
+        <resources>
+            <resource>
+                <directory>[your folder here]</directory>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
