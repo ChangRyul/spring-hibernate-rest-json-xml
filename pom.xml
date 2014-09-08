@@ -136,7 +136,7 @@
 
         <resources>
             <resource>
-                <directory>[your folder here]</directory>
+                <directory>src/resources</directory>
             </resource>
         </resources>
 
