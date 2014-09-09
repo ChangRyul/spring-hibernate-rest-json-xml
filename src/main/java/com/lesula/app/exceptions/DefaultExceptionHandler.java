@@ -1,7 +1,6 @@
-package com.lesula.app.error.handlers;
+package com.lesula.app.exceptions;
 
 import com.lesula.app.dto.response.ErrorResponse;
-import com.lesula.app.error.AppException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,8 +16,9 @@ public class DefaultExceptionHandler {
     @ExceptionHandler(value=Exception.class)
     public @ResponseBody ErrorResponse unknownExceptionHandler(HttpServletRequest request, Exception e){
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMessage("An error has occurred. Please try again later.");
+        errorResponse.setMessage("An exceptions has occurred. Please try again later.");
         errorResponse.setType("UnknownException");
+        e.printStackTrace();//fixme use logger
         return errorResponse;
     }
 

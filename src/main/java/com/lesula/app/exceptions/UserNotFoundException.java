@@ -1,4 +1,4 @@
-package com.lesula.app.error;
+package com.lesula.app.exceptions;
 
 /**
  * Created by enrico on 9/5/14.

@@ -3,7 +3,7 @@ package com.lesula.app;
 import com.lesula.app.domain.dao.IUserDAO;
 import com.lesula.app.domain.tables.User;
 import com.lesula.app.dto.response.UserResponse;
-import com.lesula.app.error.UserNotFoundException;
+import com.lesula.app.exceptions.UserNotFoundException;
 import com.lesula.app.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

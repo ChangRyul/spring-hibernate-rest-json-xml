@@ -2,6 +2,7 @@ package com.lesula.app.domain.tables;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by enrico on 9/5/14.
@@ -19,6 +20,20 @@ public class User implements Serializable{
 
     @Column(name="LastName")
     private String lastName;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name="Birthday")
+    private Date birthday;
+
+    public User(){
+
+    }
+
+    public User(String firstName, String lastName, Date birthday) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+    }
 
     public int getId() {
         return id;
@@ -42,5 +57,13 @@ public class User implements Serializable{
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 }
