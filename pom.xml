@@ -25,8 +25,8 @@
         <hibernate-validator.version>5.1.2.Final</hibernate-validator.version>
         <junit.version>4.11</junit.version>
         <mysql-connector-java.version>5.1.17</mysql-connector-java.version>
-        <jackson.version>1.9.13</jackson.version>
         <mockito-core.version>1.9.5</mockito-core.version>
+        <jackson.version>2.1.2</jackson.version>
     </properties>
 
     <dependencies>
@@ -84,13 +84,19 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.1.2</version>
+            <version>${jackson.version}</version>
         </dependency>
         
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.1.2</version>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
         <dependency>
@@ -98,8 +104,6 @@
             <artifactId>validation-api</artifactId>
             <version>1.1.0.Final</version>
         </dependency>
-
-
 
         <!--Database-->
         <dependency>

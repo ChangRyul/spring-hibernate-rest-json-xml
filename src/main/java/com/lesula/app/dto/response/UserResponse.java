@@ -1,6 +1,7 @@
 package com.lesula.app.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.lesula.app.dto.ShortDateAdapter;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -11,7 +12,8 @@ import java.util.Date;
 /**
  * Created by enrico on 9/5/14.
  */
-@XmlRootElement
+@XmlRootElement(name="user")
+@JsonRootName("user")
 public class UserResponse {
 
     private int id;

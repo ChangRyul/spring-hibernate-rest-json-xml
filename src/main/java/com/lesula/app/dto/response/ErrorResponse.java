@@ -1,11 +1,14 @@
 package com.lesula.app.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Created by enrico on 9/8/14.
  */
 @XmlRootElement(name="error")
+@JsonRootName(value = "error")
 public class ErrorResponse {
 
     private String type;
