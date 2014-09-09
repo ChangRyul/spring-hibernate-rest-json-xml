@@ -1,6 +1,8 @@
 package com.lesula.app.exceptions;
 
 import com.lesula.app.dto.response.ErrorResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,12 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class DefaultExceptionHandler {
 
+    static Logger LOG = LogManager.getLogger(DefaultExceptionHandler.class);
+
     @ExceptionHandler(value=Exception.class)
     public @ResponseBody ErrorResponse unknownExceptionHandler(HttpServletRequest request, Exception e){
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setMessage("An exceptions has occurred. Please try again later.");
         errorResponse.setType("UnknownException");
-        e.printStackTrace();//fixme use logger
+        LOG.error("Unknown exception", e);
         return errorResponse;
     }
 

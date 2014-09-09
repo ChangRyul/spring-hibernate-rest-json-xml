@@ -63,7 +63,7 @@
     </bean>
 
     <jdbc:initialize-database data-source="c3p0DataSource">
-        <jdbc:script location="classpath:startup.sql"/>
+        <jdbc:script location="classpath:sql/startup.sql"/>
     </jdbc:initialize-database>
 
 
