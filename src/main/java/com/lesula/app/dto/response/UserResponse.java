@@ -1,7 +1,11 @@
 package com.lesula.app.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.lesula.app.dto.ShortDateAdapter;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Date;
 
 /**
@@ -43,6 +47,8 @@ public class UserResponse {
     }
 
     @XmlElement
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @XmlJavaTypeAdapter(value=ShortDateAdapter.class, type = Date.class)
     public Date getBirthday() {
         return birthday;
     }
