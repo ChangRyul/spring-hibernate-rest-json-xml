@@ -29,9 +29,9 @@
         <property name="loginTimeout" value="${c3p0.timeout}" />
     </bean>
 
-    <jdbc:initialize-database data-source="c3p0DataSource">
-        <jdbc:script location="classpath:sql/startup.sql"/>
-    </jdbc:initialize-database>
+    <!--<jdbc:initialize-database data-source="c3p0DataSource">-->
+        <!--<jdbc:script location="classpath:sql/startup.sql"/>-->
+    <!--</jdbc:initialize-database>-->
 
 
     <bean id="sessionFactory"
@@ -40,13 +40,13 @@
 
         <property name="packagesToScan">
             <list>
-                <value>com.lesula.app.domain.tables</value>
+                <value>com.igloosec.app.domain.tables</value>
             </list>
         </property>
 
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL82Dialect</prop>
 
                 <prop key="hibernate.connection.CharSet">utf8</prop>
                 <prop key="hibernate.connection.characterEncoding">utf8</prop>
