@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/")
-public class MainController {
+public class StatisticsController {
 
-    private final static Logger LOG = LogManager.getLogger(MainController.class);
+    private final static Logger LOG = LogManager.getLogger(StatisticsController.class);
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {

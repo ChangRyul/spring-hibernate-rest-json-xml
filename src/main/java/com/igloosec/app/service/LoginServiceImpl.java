@@ -16,9 +16,21 @@ public class LoginServiceImpl implements LoginService {
     private UserDAO userDAO;
 
     @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ResultResponse verify(String userId) throws UserNotFoundException {
+    public ResultResponse verify(String userId, String userPw) throws UserNotFoundException {
+        int result = userDAO.verifyUser(userId, userPw);
 
-        return null;
+        ResultResponse resultResponse;
+
+        if (result == 1) {
+            resultResponse = new ResultResponse();
+            resultResponse.setCode("U001");
+            resultResponse.setMessage("로그인 성공");
+        } else {
+            resultResponse = new ResultResponse();
+            resultResponse.setCode("U002");
+            resultResponse.setMessage("로그인 실패");
+        }
+
+        return resultResponse;
     }
 }

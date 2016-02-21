@@ -1,6 +1,6 @@
 package com.igloosec.app.service;
 
-import com.igloosec.app.dto.request.ReportCreateRequest;
+import com.igloosec.app.dto.request.Report;
 import com.igloosec.app.dto.response.ReportResponse;
 import com.igloosec.app.dto.response.ResultResponse;
 
@@ -9,5 +9,5 @@ import com.igloosec.app.dto.response.ResultResponse;
  */
 public interface ReportService {
     ReportResponse getReportDetails(String userId);
-    ResultResponse createReport(String userId, ReportCreateRequest request);
+    ResultResponse createReport(String userId, Report request);
 }

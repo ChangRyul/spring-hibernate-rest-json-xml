@@ -14,7 +14,7 @@
         <property name="password" value="${jdbc.password}" />
     </bean>-->
 
-    <bean id="c3p0DataSource" class = "com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+    <bean id="dataSource" class = "com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="${jdbc.driverClassName}" />
         <property name="jdbcUrl" value="${jdbc.url}" />
         <property name="user" value="${jdbc.username}" />
@@ -34,47 +34,47 @@
     <!--</jdbc:initialize-database>-->
 
 
-    <bean id="sessionFactory"
-          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="c3p0DataSource" />
+    <!--<bean id="sessionFactory"-->
+          <!--class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">-->
+        <!--<property name="dataSource" ref="c3p0DataSource" />-->
 
-        <property name="packagesToScan">
-            <list>
-                <value>com.igloosec.app.domain.tables</value>
-            </list>
-        </property>
+        <!--<property name="packagesToScan">-->
+            <!--<list>-->
+                <!--<value>com.igloosec.app.domain.tables</value>-->
+            <!--</list>-->
+        <!--</property>-->
 
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL82Dialect</prop>
+        <!--<property name="hibernateProperties">-->
+            <!--<props>-->
+                <!--<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL82Dialect</prop>-->
 
-                <prop key="hibernate.connection.CharSet">utf8</prop>
-                <prop key="hibernate.connection.characterEncoding">utf8</prop>
-                <prop key="hibernate.connection.useUnicode">true</prop>
+                <!--<prop key="hibernate.connection.CharSet">utf8</prop>-->
+                <!--<prop key="hibernate.connection.characterEncoding">utf8</prop>-->
+                <!--<prop key="hibernate.connection.useUnicode">true</prop>-->
 
-                <prop key="hibernate.show_sql">false</prop>
-                <prop key="hibernate.format_sql">true</prop>
-                <prop key="hibernate.use_sql_comments">true</prop>
+                <!--<prop key="hibernate.show_sql">false</prop>-->
+                <!--<prop key="hibernate.format_sql">true</prop>-->
+                <!--<prop key="hibernate.use_sql_comments">true</prop>-->
 
-                <prop key="hibernate.globally_quoted_identifiers">true</prop>
+                <!--<prop key="hibernate.globally_quoted_identifiers">true</prop>-->
 
-                <!-- Drop and re-create the database schema on startup -->
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.connection.autocommit">false</prop>
+                <!--&lt;!&ndash; Drop and re-create the database schema on startup &ndash;&gt;-->
+                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
+                <!--<prop key="hibernate.connection.autocommit">false</prop>-->
 
-                <!-- second level cache -->
-                <prop key="hibernate.cache.use_second_level_cache">true</prop>
-                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+                <!--&lt;!&ndash; second level cache &ndash;&gt;-->
+                <!--<prop key="hibernate.cache.use_second_level_cache">true</prop>-->
+                <!--<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>-->
 
-            </props>
-        </property>
-    </bean>
+            <!--</props>-->
+        <!--</property>-->
+    <!--</bean>-->
 
-    <bean id="transactionManager"
-          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
+    <!--<bean id="transactionManager"-->
+          <!--class="org.springframework.orm.hibernate4.HibernateTransactionManager">-->
+        <!--<property name="sessionFactory" ref="sessionFactory" />-->
+    <!--</bean>-->
 
-    <tx:annotation-driven transaction-manager="transactionManager" />
+    <!--<tx:annotation-driven transaction-manager="transactionManager" />-->
 
 </beans>
