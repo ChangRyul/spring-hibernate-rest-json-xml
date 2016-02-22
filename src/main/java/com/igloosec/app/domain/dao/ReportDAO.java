@@ -10,6 +10,5 @@ import java.util.List;
  */
 public interface ReportDAO {
     int createReport(String userId, Report request);
-
     List<Obcode> getObcodeList(String userId);
 }

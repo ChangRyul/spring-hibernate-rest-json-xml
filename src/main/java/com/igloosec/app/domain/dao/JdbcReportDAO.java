@@ -70,7 +70,7 @@ public class JdbcReportDAO implements ReportDAO {
         }
     }
 
-    private String getOlcode(String userId) {
+    public String getOlcode(String userId) {
         return this.jdbcTemplate.queryForObject("select a.ol_code from user_layer_mapping a, sp_out_layerlist b where a.user_id = ? and a.ol_code = b.ol_code", new Object[]{userId}, String.class);
     }
 }
