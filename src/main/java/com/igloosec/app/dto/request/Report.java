@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class Report {
+    private String ob_code;
     private int in_count;
     private int out_count;
     private int total;
@@ -18,6 +19,15 @@ public class Report {
     private int preventive;
     private int disease;
     private int equipment;
+
+    @XmlElement
+    public String getOb_code() {
+        return ob_code;
+    }
+
+    public void setOb_code(String ob_code) {
+        this.ob_code = ob_code;
+    }
 
     @XmlElement
     public int getIn_count() {

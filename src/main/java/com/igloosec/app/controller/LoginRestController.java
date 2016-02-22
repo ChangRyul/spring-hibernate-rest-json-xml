@@ -33,7 +33,7 @@ public class LoginRestController {
     public ResponseEntity<ResultResponse> verifyUser(@PathVariable String userId, @PathVariable String userPw) throws Exception {
         logger.debug("api get for user login" + userId + ", userPw: " + userPw);
         userPw = hashText(new String(Base64.decode(URLDecoder.decode(userPw, "utf-8")))).toUpperCase();
-        logger.error("userPw: " + userPw);
+        //logger.error("userPw: " + userPw);
         ResultResponse result = loginService.verify(userId, userPw);
 
         return new ResponseEntity<ResultResponse>(result, HttpStatus.OK);

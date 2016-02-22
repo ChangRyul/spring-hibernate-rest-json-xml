@@ -9,5 +9,5 @@ import com.igloosec.app.exceptions.UserNotFoundException;
  * Created by enrico on 9/8/14.
  */
 public interface UserService {
-    public ResultResponse verifyUser(String userId, String password) throws UserNotFoundException;
+    UserResponse getUserDetails(String userId) throws UserNotFoundException;
 }
