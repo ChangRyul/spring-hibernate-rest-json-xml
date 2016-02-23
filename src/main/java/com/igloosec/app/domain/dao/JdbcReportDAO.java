@@ -52,7 +52,10 @@ public class JdbcReportDAO implements ReportDAO {
             Obcode obcode = new Obcode();
             obcode.setCode((String)row.get("ob_code"));
             obcode.setName((String)row.get("name"));
-            logger.error(obcode.getCode() + ":" + obcode.getName());
+
+            Date outDate = jdbcTemplate.queryForObject("select date from building_inout_state where ob_code = ? and type = 0", new Object[]{obcode.getCode()}, Date.class);
+            obcode.setDate(outDate);
+            //logger.error(obcode.getCode() + ":" + obcode.getName());
             obcodeList.add(obcode);
         }
 
