@@ -13,8 +13,8 @@ import java.util.List;
 public class Obcodes implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String code;
-    private String message;
+//    private String code;
+//    private String message;
     private List<Obcode> obcode = new ArrayList<Obcode>();
 
     public List<Obcode> getObcode() {
@@ -25,21 +25,21 @@ public class Obcodes implements Serializable {
         this.obcode = obcode;
     }
 
-    @XmlElement
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    @XmlElement
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
+//    @XmlElement
+//    public String getCode() {
+//        return code;
+//    }
+//
+//    public void setCode(String code) {
+//        this.code = code;
+//    }
+//
+//    @XmlElement
+//    public String getMessage() {
+//        return message;
+//    }
+//
+//    public void setMessage(String message) {
+//        this.message = message;
+//    }
 }

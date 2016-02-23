@@ -12,8 +12,6 @@ import java.util.Date;
 /**
  * Created by CRChoi on 2016. 2. 22..
  */
-@XmlRootElement(name="obcode")
-@JsonRootName("obcode")
 public class Obcode {
     private String code;
     private String name;

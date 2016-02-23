@@ -71,13 +71,13 @@ public class ReportRestController {
         }
 
         if (obcodes.getObcode().size() == 0) {
-            obcodes.setCode("C002");
-            obcodes.setMessage("건물 정보 없음");
+//            obcodes.setCode("C002");
+//            obcodes.setMessage("건물 정보 없음");
 
             return new ResponseEntity<Obcodes>(obcodes, HttpStatus.OK);
         } else {
-            obcodes.setCode("C001");
-            obcodes.setMessage("건물 정보 조회 성공");
+//            obcodes.setCode("C001");
+//            obcodes.setMessage("건물 정보 조회 성공");
             return new ResponseEntity<Obcodes>(obcodes, HttpStatus.OK);
         }
     }
