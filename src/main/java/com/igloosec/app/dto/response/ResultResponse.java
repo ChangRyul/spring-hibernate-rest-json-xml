@@ -8,8 +8,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Created by User on 2016-02-19.
  */
-@XmlRootElement(name="result")
-@JsonRootName("result")
+@XmlRootElement(name="items")
+@JsonRootName("items")
 public class ResultResponse {
     private String code;
     private String message;

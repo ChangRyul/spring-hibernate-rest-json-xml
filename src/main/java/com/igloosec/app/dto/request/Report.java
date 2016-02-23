@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Created by User on 2016-02-19.
  */
-@XmlRootElement
+@XmlRootElement(name="items")
 public class Report {
     private String ob_code;
     private int in_count;

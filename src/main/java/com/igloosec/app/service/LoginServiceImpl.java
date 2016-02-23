@@ -2,6 +2,7 @@ package com.igloosec.app.service;
 
 import com.igloosec.app.domain.dao.UserDAO;
 import com.igloosec.app.dto.response.ResultResponse;
+import com.igloosec.app.dto.response.UserResponse;
 import com.igloosec.app.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class LoginServiceImpl implements LoginService {
     private UserDAO userDAO;
 
     @Override
-    public ResultResponse verify(String userId, String userPw) throws UserNotFoundException {
+    public UserResponse verify(String userId, String userPw) throws UserNotFoundException {
         int result = userDAO.verifyUser(userId, userPw);
 
         ResultResponse resultResponse;
@@ -31,6 +32,18 @@ public class LoginServiceImpl implements LoginService {
             resultResponse.setMessage("로그인 실패");
         }
 
-        return resultResponse;
+        if (result == 1) {
+            UserResponse userResponse = userDAO.getUserDetails(userId);
+            userResponse.setCode(resultResponse.getCode());
+            userResponse.setMessage(resultResponse.getMessage());
+
+            return userResponse;
+        } else {
+            UserResponse userResponse = new UserResponse();
+            userResponse.setCode(resultResponse.getCode());
+            userResponse.setMessage(resultResponse.getMessage());
+
+            return userResponse;
+        }
     }
 }

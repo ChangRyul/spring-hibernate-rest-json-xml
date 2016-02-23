@@ -40,7 +40,16 @@ public class ReportRestController {
             throw new DtoValidationException(bindingResult.getFieldErrors());
         }
 
-        ResultResponse resResult = reportService.createReport(userId, request);
+        ResultResponse resResult = new ResultResponse();
+
+        try {
+            resResult = reportService.createReport(userId, request);
+        } catch (Exception ex) {
+            resResult.setCode("R003");
+            resResult.setMessage("리포트 등록 실패");
+
+            return new ResponseEntity<ResultResponse>(resResult, HttpStatus.CREATED);
+        }
 
         return new ResponseEntity<ResultResponse>(resResult, HttpStatus.CREATED);
     }
@@ -61,10 +70,16 @@ public class ReportRestController {
             obcodes.getObcode().add(obcode);
         }
 
-        if (obcodes.getObcode().size() == 0)
-            return new ResponseEntity<Obcodes>(HttpStatus.NO_CONTENT);
+        if (obcodes.getObcode().size() == 0) {
+            obcodes.setCode("C002");
+            obcodes.setMessage("건물 정보 없음");
 
-        return new ResponseEntity<Obcodes>(obcodes, HttpStatus.OK);
+            return new ResponseEntity<Obcodes>(obcodes, HttpStatus.OK);
+        } else {
+            obcodes.setCode("C001");
+            obcodes.setMessage("건물 정보 조회 성공");
+            return new ResponseEntity<Obcodes>(obcodes, HttpStatus.OK);
+        }
     }
 
 }

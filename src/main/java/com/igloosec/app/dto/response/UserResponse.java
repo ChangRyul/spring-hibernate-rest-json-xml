@@ -12,10 +12,11 @@ import java.util.Date;
 /**
  * Created by enrico on 9/5/14.
  */
-@XmlRootElement(name="user")
-@JsonRootName("user")
+@XmlRootElement(name="items")
+@JsonRootName("items")
 public class UserResponse {
-
+    private String code;
+    private String message;
     private String name;
     private String user_id;
     private String user_name;
@@ -29,6 +30,24 @@ public class UserResponse {
     private int layer_grade;
     private int keep_grade;
     private Date contract;
+
+    @XmlElement
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    @XmlElement
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     @XmlElement
     public String getName() {

@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by CRChoi on 2016. 2. 22..
  */
-@XmlRootElement
+@XmlRootElement(name="items")
 public class InState {
     private int in;
     private Date in_date;

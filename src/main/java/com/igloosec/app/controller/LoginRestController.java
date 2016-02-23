@@ -29,14 +29,14 @@ public class LoginRestController {
     @Autowired
     LoginService loginService;
 
-    @RequestMapping(value = "/{userId}/{userPw}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<ResultResponse> verifyUser(@PathVariable String userId, @PathVariable String userPw) throws Exception {
-        logger.debug("api get for user login" + userId + ", userPw: " + userPw);
-        userPw = hashText(new String(Base64.decode(URLDecoder.decode(userPw, "utf-8")))).toUpperCase();
-        //logger.error("userPw: " + userPw);
-        ResultResponse result = loginService.verify(userId, userPw);
 
-        return new ResponseEntity<ResultResponse>(result, HttpStatus.OK);
+    @RequestMapping(value = "/{userId}/{userPw}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<UserResponse> verifyUser(@PathVariable String userId, @PathVariable String userPw) throws Exception {
+        userPw = hashText(new String(Base64.decode(URLDecoder.decode(userPw, "utf-8")))).toUpperCase();
+
+        UserResponse result = loginService.verify(userId, userPw);
+
+        return new ResponseEntity<UserResponse>(result, HttpStatus.OK);
     }
 
     public static String convertByteToHex(byte data[]) {

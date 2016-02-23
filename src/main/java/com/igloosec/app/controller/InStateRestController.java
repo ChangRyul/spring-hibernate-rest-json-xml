@@ -35,7 +35,16 @@ public class InStateRestController {
             throw new DtoValidationException(bindingResult.getFieldErrors());
         }
 
-        ResultResponse resResult = inStateService.createInState(userId, request);
+        ResultResponse resResult = new ResultResponse();
+
+        try {
+            resResult = inStateService.createInState(userId, request);
+        } catch (Exception ex) {
+            resResult.setCode("I003");
+            resResult.setMessage("입추정보 등록 실패");
+
+            return new ResponseEntity<ResultResponse>(resResult, HttpStatus.CREATED);
+        }
 
         return new ResponseEntity<ResultResponse>(resResult, HttpStatus.CREATED);
     }
