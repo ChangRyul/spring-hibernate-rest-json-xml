@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by CRChoi on 2016. 2. 22..
  */
-@XmlRootElement(name="items")
+@XmlRootElement(name="codes")
 public class Obcodes implements Serializable {
     private static final long serialVersionUID = 1L;
 
