@@ -2,6 +2,7 @@ package com.igloosec.app.domain.dao;
 
 import com.igloosec.app.dto.request.Report;
 import com.igloosec.app.dto.response.Obcode;
+import com.igloosec.app.dto.response.ReportResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,13 +33,33 @@ public class JdbcReportDAO implements ReportDAO {
 
     @Override
     public int createReport(String userId, Report request) {
-        if (checkExistTodayReport(userId, request.getOb_code()))
+        if (checkExistReport(userId, request, null))
             return 2;
 
         String query = "INSERT INTO daily_report (report_time, ob_code, ol_code, user_id, in_count, out_count, total, selection, perish, litter, feed, preventive, disease, equipment) \n" +
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        int result = jdbcTemplate.update(query, new Object[]{new Date(), request.getOb_code(), getOlcode(userId), userId, request.getIn_count(), request.getOut_count(), request.getTotal(), request.getSelection(), request.getPerish(), request.getLitter(), request.getFeed(), request.getPreventive(), request.getDisease(), request.getEquipment()});
+        int result = jdbcTemplate.update(query, new Object[]{request.getReport_date(), request.getOb_code(), getOlcode(userId), userId, request.getIn_count(), request.getOut_count(), request.getTotal(), request.getSelection(), request.getPerish(), request.getLitter(), request.getFeed(), request.getPreventive(), request.getDisease(), request.getEquipment()});
+        return result;
+    }
+
+    @Override
+    public int updateReport(String userId, String reportDate, Report report) {
+        if (checkExistReport(userId, report, reportDate))
+            return 2;
+
+        logger.error(report.toString());
+
+        String query = "UPDATE daily_report SET report_time = ?, selection = ?, perish = ?, litter = ?, preventive = ?, disease = ?, equipment = ? WHERE to_char(report_time, 'YYYY-MM-DD') = ? AND ob_code = ? AND ol_code = ? AND user_id = ?";
+
+        int result = -1;
+
+        try {
+            result= jdbcTemplate.update(query, new Object[]{report.getReport_date(), report.getSelection(), report.getPerish(), report.getLitter(), report.getPreventive(), report.getDisease(), report.getEquipment(), reportDate, report.getOb_code(), getOlcode(userId), userId});
+        } catch (Exception ex) {
+            logger.error(ex);
+        }
+
         return result;
     }
 
@@ -62,9 +85,46 @@ public class JdbcReportDAO implements ReportDAO {
         return obcodeList;
     }
 
-    private boolean checkExistTodayReport(String userId, String obcode) {
-        String query = "select count(*) from daily_report where to_char(report_time, 'YYYY-MM-DD') = to_char(current_date, 'YYYY-MM-DD') and ob_code = ? and user_id = ?";
-        int count = this.jdbcTemplate.queryForObject(query, new Object[]{obcode, userId}, Integer.class);
+    @Override
+    public List<ReportResponse> getReportList(String userId, String obcode) {
+        List<ReportResponse> reportList = new ArrayList<>();
+
+        String query = "SELECT a.report_time, b.name, a.selection, a.perish, a.litter, a.preventive, a.disease, a.equipment FROM daily_report a, sp_out_bdlist b WHERE a.ob_code = b.ob_code AND a.user_id = ? AND a.ob_code = ? ORDER BY report_time DESC";
+
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query, new Object[]{userId, obcode});
+
+        for (Map<String, Object> row : rows) {
+            ReportResponse report = new ReportResponse();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+            report.setReport_date(format.format((Date)row.get("report_time")));
+            report.setOb_code(obcode);
+            report.setBd_name((String)row.get("name"));
+            report.setSelection((int)row.get("selection"));
+            report.setPerish((int)row.get("perish"));
+            report.setLitter((int)row.get("litter"));
+            report.setPreventive((int)row.get("preventive"));
+            report.setDisease((int)row.get("disease"));
+            report.setEquipment((int)row.get("equipment"));
+
+            reportList.add(report);
+        }
+
+        return reportList;
+    }
+
+    private boolean checkExistReport(String userId, Report report, String targetDate) {
+        String query = "select count(*) from daily_report where to_char(report_time, 'YYYY-MM-DD') = ? and ob_code = ? and user_id = ?";
+
+        int count = 0;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        if (targetDate == null) {
+            count = this.jdbcTemplate.queryForObject(query, new Object[]{format.format(report.getReport_date()), report.getOb_code(), userId}, Integer.class);
+        } else {
+            logger.error(targetDate);
+            count = this.jdbcTemplate.queryForObject(query, new Object[]{format.format(report.getReport_date()), report.getOb_code(), userId}, Integer.class);
+        }
 
         if (count == 1) {
             return true;

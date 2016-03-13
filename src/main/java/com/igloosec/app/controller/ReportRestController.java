@@ -1,9 +1,7 @@
 package com.igloosec.app.controller;
 
 import com.igloosec.app.dto.request.Report;
-import com.igloosec.app.dto.response.Obcode;
-import com.igloosec.app.dto.response.Obcodes;
-import com.igloosec.app.dto.response.ResultResponse;
+import com.igloosec.app.dto.response.*;
 import com.igloosec.app.exceptions.DtoValidationException;
 import com.igloosec.app.service.ReportService;
 import org.apache.logging.log4j.LogManager;
@@ -45,6 +43,7 @@ public class ReportRestController {
         try {
             resResult = reportService.createReport(userId, request);
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             resResult.setCode("R003");
             resResult.setMessage("리포트 등록 실패");
 
@@ -52,6 +51,51 @@ public class ReportRestController {
         }
 
         return new ResponseEntity<ResultResponse>(resResult, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/update/{userId}/{reportDate}", method = RequestMethod.POST, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<ResultResponse> updateReport(@PathVariable String userId, @PathVariable String reportDate, @Valid @RequestBody Report request, BindingResult bindingResult) throws DtoValidationException {
+        logger.error(request.toString());
+
+        if (bindingResult.hasErrors()) {
+            throw new DtoValidationException(bindingResult.getFieldErrors());
+        }
+
+        ResultResponse resResult = new ResultResponse();
+
+        try {
+            resResult = reportService.updateReport(userId, reportDate, request);
+        } catch (Exception ex) {
+            resResult.setCode("R003");
+            resResult.setMessage("리포트 수정 실패");
+
+            return new ResponseEntity<ResultResponse>(resResult, HttpStatus.CREATED);
+        }
+
+        return new ResponseEntity<ResultResponse>(resResult, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/list/{userId}/{obcode}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Reports> getReportList(@PathVariable String userId, @PathVariable String obcode) throws DtoValidationException {
+        List<ReportResponse> reportList = new ArrayList<>();
+
+        try {
+            reportList = reportService.getReportList(userId, obcode);
+            logger.error("reportlist: " + reportList.size());
+        } catch (Exception ex) {
+
+        }
+
+        Reports reports = new Reports();
+
+        for (ReportResponse report : reportList) {
+            logger.error("report: " + report.toString());
+            reports.getReport().add(report);
+        }
+
+        return new ResponseEntity<Reports>(reports, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/obcode/{userId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})

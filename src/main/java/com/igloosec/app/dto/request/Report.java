@@ -1,7 +1,12 @@
 package com.igloosec.app.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.igloosec.app.dto.ShortDateAdapter;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.Date;
 
 /**
  * Created by User on 2016-02-19.
@@ -19,6 +24,7 @@ public class Report {
     private int preventive;
     private int disease;
     private int equipment;
+    private Date report_date;
 
     @XmlElement
     public String getOb_code() {
@@ -119,10 +125,22 @@ public class Report {
         this.equipment = equipment;
     }
 
+    @XmlElement
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @XmlJavaTypeAdapter(value=ShortDateAdapter.class, type = Date.class)
+    public Date getReport_date() {
+        return report_date;
+    }
+
+    public void setReport_date(Date report_date) {
+        this.report_date = report_date;
+    }
+
     @Override
     public String toString() {
         return "Report{" +
-                "in_count=" + in_count +
+                "ob_code='" + ob_code + '\'' +
+                ", in_count=" + in_count +
                 ", out_count=" + out_count +
                 ", total=" + total +
                 ", selection=" + selection +
@@ -132,6 +150,7 @@ public class Report {
                 ", preventive=" + preventive +
                 ", disease=" + disease +
                 ", equipment=" + equipment +
+                ", report_date=" + report_date +
                 '}';
     }
 }
