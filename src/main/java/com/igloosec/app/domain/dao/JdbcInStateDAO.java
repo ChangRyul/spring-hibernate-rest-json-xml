@@ -36,9 +36,9 @@ public class JdbcInStateDAO implements InStateDAO {
         if (checkExistInState(jdbcReportDAO.getOlcode(userId), inState.getIn_date(), null))
             return 2;
 
-        String query = "insert into layer_in_state (ol_code, \"in\", in_date, out_date) VALUES (?,?,?,?)";
+        String query = "insert into layer_in_state (ol_code, \"in\", in_date, out_date, litter) VALUES (?,?,?,?,?)";
 
-        int result = jdbcTemplate.update(query, new Object[]{jdbcReportDAO.getOlcode(userId), inState.getIn(), inState.getIn_date(), inState.getOut_date()});
+        int result = jdbcTemplate.update(query, new Object[]{jdbcReportDAO.getOlcode(userId), inState.getIn(), inState.getIn_date(), inState.getOut_date(), inState.getLitter()});
 
         return result;
     }
@@ -47,16 +47,16 @@ public class JdbcInStateDAO implements InStateDAO {
     public List<InstateResponse> getInstateList(String userId) {
         List<InstateResponse> instateResponseList = new ArrayList<>();
 
-        String query = "SELECT * FROM layer_in_state WHERE ol_code = ? ORDER BY in_date;";
+        String query = "SELECT * FROM layer_in_state WHERE ol_code = ? ORDER BY in_date DESC;";
 
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(query, new Object[]{jdbcReportDAO.getOlcode(userId)});
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         for (Map<String, Object> row : rows) {
             InstateResponse instateResponse = new InstateResponse();
             instateResponse.setIn_date((Date)row.get("in_date"));
             instateResponse.setIn((int)row.get("in"));
             instateResponse.setOut_date((Date)row.get("out_date"));
+            instateResponse.setLitter((int)row.get("litter"));
 
             instateResponseList.add(instateResponse);
         }
@@ -66,12 +66,17 @@ public class JdbcInStateDAO implements InStateDAO {
 
     @Override
     public int updateInState(String userId, String targetDate, InState inState) {
-        if (checkExistInState(jdbcReportDAO.getOlcode(userId), inState.getIn_date(), targetDate))
-            return 2;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String inDate = format.format(inState.getIn_date());
 
-        String query = "UPDATE layer_in_state SET \"in\" = ?, in_date = ?, out_date = ? WHERE ol_code = ? AND to_char(in_date, 'YYYY-MM-DD') = ?";
+        if (!targetDate.equals(inDate)) {
+            if (checkExistInState(jdbcReportDAO.getOlcode(userId), inState.getIn_date(), targetDate))
+                return 2;
+        }
 
-        int result = jdbcTemplate.update(query, new Object[]{inState.getIn(), inState.getIn_date(), inState.getOut_date(), jdbcReportDAO.getOlcode(userId), targetDate});
+        String query = "UPDATE layer_in_state SET \"in\" = ?, in_date = ?, out_date = ?, litter = ? WHERE ol_code = ? AND to_char(in_date, 'YYYY-MM-DD') = ?";
+
+        int result = jdbcTemplate.update(query, new Object[]{inState.getIn(), inState.getIn_date(), inState.getOut_date(), inState.getLitter(), jdbcReportDAO.getOlcode(userId), targetDate});
 
         return result;
     }

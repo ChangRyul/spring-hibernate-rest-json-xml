@@ -76,10 +76,11 @@ public class ReportRestController {
         return new ResponseEntity<ResultResponse>(resResult, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/list/{userId}/{obcode}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/list/{userId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Reports> getReportList(@PathVariable String userId, @PathVariable String obcode) throws DtoValidationException {
+    public ResponseEntity<Reports> getReportList(@PathVariable String userId) throws DtoValidationException {
         List<ReportResponse> reportList = new ArrayList<>();
+        String obcode = "";
 
         try {
             reportList = reportService.getReportList(userId, obcode);

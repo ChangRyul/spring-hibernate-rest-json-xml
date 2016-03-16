@@ -45,8 +45,12 @@ public class JdbcReportDAO implements ReportDAO {
 
     @Override
     public int updateReport(String userId, String reportDate, Report report) {
-        if (checkExistReport(userId, report, reportDate))
-            return 2;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String reportDateOri = format.format(report.getReport_date());
+        if (!reportDate.equals(reportDateOri)) {
+            if (checkExistReport(userId, report, reportDate))
+                return 2;
+        }
 
         logger.error(report.toString());
 
@@ -89,16 +93,18 @@ public class JdbcReportDAO implements ReportDAO {
     public List<ReportResponse> getReportList(String userId, String obcode) {
         List<ReportResponse> reportList = new ArrayList<>();
 
-        String query = "SELECT a.report_time, b.name, a.selection, a.perish, a.litter, a.preventive, a.disease, a.equipment FROM daily_report a, sp_out_bdlist b WHERE a.ob_code = b.ob_code AND a.user_id = ? AND a.ob_code = ? ORDER BY report_time DESC";
+        String query = "SELECT a.report_time, b.name, a.selection, a.perish, a.litter, a.preventive, a.disease, a.equipment, a.ob_code FROM daily_report a, sp_out_bdlist b WHERE a.ob_code = b.ob_code AND a.user_id = ? ORDER BY report_time DESC";
+        //String query = "SELECT a.report_time, b.name, a.selection, a.perish, a.litter, a.preventive, a.disease, a.equipment FROM daily_report a, sp_out_bdlist b WHERE a.ob_code = b.ob_code AND a.user_id = ? AND a.ob_code = ? ORDER BY report_time DESC";
 
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query, new Object[]{userId, obcode});
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query, new Object[]{userId});
+        //List<Map<String, Object>> rows = jdbcTemplate.queryForList(query, new Object[]{userId, obcode});
 
         for (Map<String, Object> row : rows) {
             ReportResponse report = new ReportResponse();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
             report.setReport_date(format.format((Date)row.get("report_time")));
-            report.setOb_code(obcode);
+            report.setOb_code((String)row.get("ob_code"));
             report.setBd_name((String)row.get("name"));
             report.setSelection((int)row.get("selection"));
             report.setPerish((int)row.get("perish"));

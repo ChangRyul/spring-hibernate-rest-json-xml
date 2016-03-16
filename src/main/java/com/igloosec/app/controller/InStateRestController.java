@@ -83,7 +83,7 @@ public class InStateRestController {
             instateList = inStateService.getInstateList(userId);
             logger.error("instatelist: " + instateList.size());
         } catch (Exception ex) {
-
+            logger.error(ex);
         }
 
         Instates instates = new Instates();

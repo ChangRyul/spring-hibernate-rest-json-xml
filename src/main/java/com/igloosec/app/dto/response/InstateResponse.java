@@ -16,6 +16,7 @@ public class InstateResponse {
     private int in;
     private Date in_date;
     private Date out_date;
+    private int litter;
 
     @XmlElement
     public int getIn() {
@@ -48,12 +49,22 @@ public class InstateResponse {
         this.out_date = out_date;
     }
 
+    @XmlElement
+    public int getLitter() {
+        return litter;
+    }
+
+    public void setLitter(int litter) {
+        this.litter = litter;
+    }
+
     @Override
     public String toString() {
         return "InstateResponse{" +
                 "in=" + in +
                 ", in_date=" + in_date +
                 ", out_date=" + out_date +
+                ", litter=" + litter +
                 '}';
     }
 }

@@ -10,6 +10,7 @@ import java.util.Date;
 @XmlRootElement(name="items")
 public class InState {
     private int in;
+    private int litter;
     private Date in_date;
     private Date out_date;
 
@@ -40,10 +41,20 @@ public class InState {
         this.out_date = out_date;
     }
 
+    @XmlElement
+    public int getLitter() {
+        return litter;
+    }
+
+    public void setLitter(int litter) {
+        this.litter = litter;
+    }
+
     @Override
     public String toString() {
         return "InState{" +
                 "in=" + in +
+                ", litter=" + litter +
                 ", in_date=" + in_date +
                 ", out_date=" + out_date +
                 '}';
