@@ -1,5 +1,6 @@
 package com.igloosec.app.domain.dao;
 
+import com.igloosec.app.dto.response.Flux;
 import com.igloosec.app.dto.response.HumidityResponse;
 import com.igloosec.app.dto.response.TemperatureResponse;
 import org.apache.logging.log4j.LogManager;
@@ -94,5 +95,66 @@ public class JdbcStatisticsDAO implements StatisticsDAO {
         }
 
         return humidityResponseList;
+    }
+
+    @Override
+    public List<Flux> getFluxList(int buildNo) {
+        List<Flux> fluxList = new ArrayList<>();
+
+        String query = "SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160226 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160227 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160228 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160229 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160301 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160302 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160303 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160304 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160307 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160308 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160309 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160310 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160311 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160312 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160313 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160314 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160315 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160316 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160317 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160318 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160319 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160320 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160321 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160322 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160323 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160324 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160325 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME  " +
+                "UNION ALL SELECT AGENTCODE, AGENTNAME, MAX(cast(ext5 as float)) AS Max, MIN(cast(ext5 as float)) as Min,  to_timestamp(to_char(MAX(servertime),'yyyy-mm-dd'),'yyyy-mm-dd') as Time FROM  EVENT_EA_20160326 A where subeventtype = 'EA007_E03_SE04' GROUP BY AGENTCODE, AGENTNAME";
+
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query, new Object[]{});
+
+        for (Map<String, Object> row : rows) {
+            if (buildNo == 1) {
+                if (((String)row.get("AGENTCODE")).equals("6BBC4A35-A50D-458A-9663-9F324BAEFFEF")) {
+                    continue;
+                }
+            } else if (buildNo == 2) {
+                if (((String)row.get("AGENTCODE")).equals("272F057C-D7F6-4960-8FA1-F7A809B323BF") || ((String)row.get("AGENTCODE")).equals("E06FE0F6-A4D5-40AA-AB7F-56FF787A1B95")) {
+                    continue;
+                }
+            }
+
+            Flux flux = new Flux();
+
+            flux.setAgentcode((String)row.get("AGENTCODE"));
+            flux.setName((String)row.get("AGENTNAME"));
+            flux.setMax((double)row.get("Max"));
+            flux.setMin((double)row.get("Min"));
+            flux.setTime((Date)row.get("Time"));
+            flux.setVal(flux.getMax() - flux.getMin());
+
+            fluxList.add(flux);
+        }
+
+        return fluxList;
     }
 }
