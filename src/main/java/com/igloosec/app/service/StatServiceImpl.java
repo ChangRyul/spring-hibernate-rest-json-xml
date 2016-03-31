@@ -4,6 +4,7 @@ import com.igloosec.app.domain.dao.StatisticsDAO;
 import com.igloosec.app.dto.response.Flux;
 import com.igloosec.app.dto.response.HumidityResponse;
 import com.igloosec.app.dto.response.TemperatureResponse;
+import com.igloosec.app.dto.response.Weight;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,11 +64,16 @@ public class StatServiceImpl implements StatService {
             fluxList.addAll(fluxList2);
         } else if (buildNo.equals("2")) {
             for (int i = 1; i < fluxList.size(); i++) {
-                LOG.error(fluxList.get(i).toString());
                 fluxList.get(i).setVal(fluxList.get(i - 1).getVal() + fluxList.get(i).getVal());
             }
         }
 
         return fluxList;
+    }
+
+    @Override
+    public List<Weight> getWeightList(String buildNo) {
+        List<Weight> weightList = statisticsDAO.getWeightList(Integer.parseInt(buildNo));
+        return weightList;
     }
 }

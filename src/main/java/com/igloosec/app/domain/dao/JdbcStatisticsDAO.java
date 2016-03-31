@@ -3,6 +3,7 @@ package com.igloosec.app.domain.dao;
 import com.igloosec.app.dto.response.Flux;
 import com.igloosec.app.dto.response.HumidityResponse;
 import com.igloosec.app.dto.response.TemperatureResponse;
+import com.igloosec.app.dto.response.Weight;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by User on 2016-03-31.
@@ -156,5 +159,72 @@ public class JdbcStatisticsDAO implements StatisticsDAO {
         }
 
         return fluxList;
+    }
+
+    @Override
+    public List<Weight> getWeightList(int buildNo) {
+        List<Weight> weightList = new ArrayList<>();
+
+        String query = "select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160226 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160227 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160228 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160229 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160301 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160302 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160303 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160304 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160307 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160308 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160309 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160310 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160311 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160312 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160313 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160314 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160315 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160316 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160317 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160318 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160319 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160320 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160321 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160322 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160323 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160324 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160325 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160326 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
+                "";
+
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query, new Object[]{});
+
+        for (Map<String, Object> row : rows) {
+            if (buildNo == 1) {
+                if (((String)row.get("agentcode")).equals("18EE5BD3-3AEB-49D0-AE48-E630C758051D")) {
+                    continue;
+                }
+            } else if (buildNo == 2) {
+                if (((String)row.get("agentcode")).equals("41C3E71F-4EF0-48BD-AAAE-D43C49A3C29F") || ((String)row.get("agentcode")).equals("4C8605E9-2FC0-4506-9D58-BC8619F3AAB0")) {
+                    continue;
+                }
+            }
+
+            Weight weight = new Weight();
+
+            weight.setAgentcode((String)row.get("agentcode"));
+            weight.setName((String)row.get("agentname"));
+            weight.setVal((double)row.get("avg"));
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+            try {
+                weight.setTime(format.parse((String)row.get("to_char")));
+            } catch (Exception ex) {
+
+            }
+
+            weightList.add(weight);
+        }
+
+        return weightList;
     }
 }
