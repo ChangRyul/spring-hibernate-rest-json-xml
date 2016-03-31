@@ -388,17 +388,14 @@ function renderWeight(element, dong, obj){
 
 
 
-    $.getJSON("/stat/humidity/" + dong + ".json",
+    $.getJSON("/stat/weight/" + dong + ".json",
         function (data) {
             var agent_code = obj.agent_code;
             var temp_array = [];
             var standard_array = [];
 
-            $.each(data.Humidities.humidity, function(key, value){
-//                    if(agent_code === value.agentcode){
-//                    console.
-
-                if("022F035D-DF75-4A9C-924E-DA61D82E3214" === value.agentcode){
+            $.each(data.Weights.weight, function(key, value){
+                if(agent_code === value.agentcode){
                     temp_array.push([new Date(value.time).getTime(), value.val]);
                     standard_array.push([new Date(value.time).getTime(), value.val-30]);
                 }
@@ -406,14 +403,14 @@ function renderWeight(element, dong, obj){
 
 
             var series = {
-                "name": "Humidity",
-                "data": temp_array.slice(0, 20),
+                "name": "Weight",
+                "data": temp_array,
 //                "pointWidth": 30
             }
             var standard_series = {
-                "name": "Humidity",
+                "name": "기준값",
                 "type": "line",
-                "data": standard_array.slice(0, 20)
+                "data": standard_array
             }
 
             element.find(".weight1").highcharts({
@@ -436,13 +433,13 @@ function renderWeight(element, dong, obj){
                 },
                 yAxis: {
                     title: {
-                        text: 'Temperature'
+                        text: 'Weight (g)'
                     },
                     min: 0
                 },
                 tooltip: {
                     headerFormat: '<b>{series.name}</b><br>',
-                    pointFormat: '{point.x:%m-%d}: {point.y:.2f} m'
+                    pointFormat: '{point.x:%m-%d}: {point.y:.2f} g'
                 },
                 legend: {
                     enabled: false
@@ -451,7 +448,7 @@ function renderWeight(element, dong, obj){
                     column: {
                         dataLabels: {
                             enabled: true,
-                            format: '{point.y:.1f}',
+                            format: '{point.y:,.0f} g',
                             rotation: -90,
                             color: '#FFFFFF',
                             align: 'right',
