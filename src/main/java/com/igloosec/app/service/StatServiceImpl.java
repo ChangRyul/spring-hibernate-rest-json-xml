@@ -51,13 +51,13 @@ public class StatServiceImpl implements StatService {
                 }
             }
 
-            for (int i = 1; i < fluxList1.size(); i++) {
-                fluxList1.get(i).setVal(fluxList1.get(i - 1).getVal() + fluxList1.get(i).getVal());
-            }
-
-            for (int i = 1; i < fluxList2.size(); i++) {
-                fluxList2.get(i).setVal(fluxList2.get(i - 1).getVal() + fluxList2.get(i).getVal());
-            }
+//            for (int i = 1; i < fluxList1.size(); i++) {
+//                fluxList1.get(i).setVal(fluxList1.get(i - 1).getVal() + fluxList1.get(i).getVal());
+//            }
+//
+//            for (int i = 1; i < fluxList2.size(); i++) {
+//                fluxList2.get(i).setVal(fluxList2.get(i - 1).getVal() + fluxList2.get(i).getVal());
+//            }
 
             fluxList.clear();
             fluxList.addAll(fluxList1);

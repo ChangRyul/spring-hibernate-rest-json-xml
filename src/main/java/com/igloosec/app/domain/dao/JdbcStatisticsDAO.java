@@ -155,6 +155,8 @@ public class JdbcStatisticsDAO implements StatisticsDAO {
             flux.setTime(((Date)row.get("Time")).getTime());
             flux.setVal(flux.getMax() - flux.getMin());
 
+            logger.error(flux.getVal());
+
             fluxList.add(flux);
         }
 
