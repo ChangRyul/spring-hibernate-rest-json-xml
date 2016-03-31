@@ -386,8 +386,14 @@ function renderTemp_hum(element, dong, obj){
 
 function renderWeight(element, dong, obj){
 
-
-
+    var temp_standard = {}
+    $.getJSON("/stat/standard.json",
+        function (data) {
+            $.each(data.ChickManual.table1, function(i, v){
+                temp_standard[v.date] = v.weight;
+            })
+        }
+    );
     $.getJSON("/stat/weight/" + dong + ".json",
         function (data) {
             var agent_code = obj.agent_code;
@@ -397,9 +403,12 @@ function renderWeight(element, dong, obj){
             $.each(data.Weights.weight, function(key, value){
                 if(agent_code === value.agentcode){
                     temp_array.push([new Date(value.time).getTime(), value.val]);
-                    standard_array.push([new Date(value.time).getTime(), value.val-30]);
                 }
             });
+
+            $.each(temp_array, function(i, v){
+                standard_array.push([v[0], temp_standard[i + 1]]);
+            })
 
 
             var series = {
@@ -408,7 +417,7 @@ function renderWeight(element, dong, obj){
 //                "pointWidth": 30
             }
             var standard_series = {
-                "name": "기준값",
+                "name": "권장",
                 "type": "line",
                 "data": standard_array
             }
@@ -439,7 +448,7 @@ function renderWeight(element, dong, obj){
                 },
                 tooltip: {
                     headerFormat: '<b>{series.name}</b><br>',
-                    pointFormat: '{point.x:%m-%d}: {point.y:.2f} g'
+                    pointFormat: '{point.x:%m-%d}: {point.y:.1f} g'
                 },
                 legend: {
                     enabled: false
@@ -448,7 +457,7 @@ function renderWeight(element, dong, obj){
                     column: {
                         dataLabels: {
                             enabled: true,
-                            format: '{point.y:,.0f} g',
+                            format: '{point.y:,.1f} g',
                             rotation: -90,
                             color: '#FFFFFF',
                             align: 'right',
@@ -464,6 +473,15 @@ function renderWeight(element, dong, obj){
 
 function renderFlux(element, dong, obj){
 
+    var temp_standard = {}
+    $.getJSON("/stat/standard.json",
+            function (data) {
+                $.each(data.ChickManual.table1, function(i, v){
+                    temp_standard[v.date] = v.water;
+                })
+            }
+    );
+
 
     $.getJSON("/stat/flux/" + dong + ".json",
         function (data) {
@@ -474,17 +492,20 @@ function renderFlux(element, dong, obj){
             $.each(data.Fluxes.flux, function(key, value){
                 if(agent_code === value.agentcode){
                     temp_array.push([new Date(value.time).getTime(), value.val]);
-                    standard_array.push([new Date(value.time).getTime(), value.val-30]);
                 }
             });
 
+            $.each(temp_array, function(i, v){
+                standard_array.push([v[0], temp_standard[i + 1]]);
+            })
+
             var series = {
-                "name": "Flux",
+                "name": "Water",
                 "data": temp_array,
 //                "pointWidth": 15
             }
             var standard_series = {
-                "name": "기준값",
+                "name": "권장",
                 "type": "line",
                 "data": standard_array
             }
@@ -509,7 +530,7 @@ function renderFlux(element, dong, obj){
                 },
                 yAxis: {
                     title: {
-                        text: 'Temperature'
+                        text: 'Water'
                     },
                     min: 0
                 },
