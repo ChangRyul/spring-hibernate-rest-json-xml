@@ -63,9 +63,9 @@ public class StatServiceImpl implements StatService {
             fluxList.addAll(fluxList1);
             fluxList.addAll(fluxList2);
         } else if (buildNo.equals("2")) {
-            for (int i = 1; i < fluxList.size(); i++) {
-                fluxList.get(i).setVal(fluxList.get(i - 1).getVal() + fluxList.get(i).getVal());
-            }
+//            for (int i = 1; i < fluxList.size(); i++) {
+//                fluxList.get(i).setVal(fluxList.get(i - 1).getVal() + fluxList.get(i).getVal());
+//            }
         }
 
         return fluxList;
