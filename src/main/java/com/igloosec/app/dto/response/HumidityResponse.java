@@ -16,7 +16,7 @@ import java.util.Date;
 @JsonRootName("humidity")
 public class HumidityResponse {
     private String agentcode;
-    private Date time;
+    private Long time;
     private int dw;
     private String type;
     private double val;
@@ -32,13 +32,13 @@ public class HumidityResponse {
     }
 
     @XmlElement
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    @XmlJavaTypeAdapter(value=ShortDateAdapter.class, type = Date.class)
-    public Date getTime() {
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+//    @XmlJavaTypeAdapter(value=ShortDateAdapter.class, type = Date.class)
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 

@@ -18,7 +18,7 @@ public class Flux {
     private String agentcode;
     private String name;
     private double val;
-    private Date time;
+    private Long time;
     private double max;
     private double min;
 
@@ -50,13 +50,13 @@ public class Flux {
     }
 
     @XmlElement
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @XmlJavaTypeAdapter(value=ShortDateAdapter.class, type = Date.class)
-    public Date getTime() {
+//    @JsonFormat(pattern = "yyyy-MM-dd")
+//    @XmlJavaTypeAdapter(value=ShortDateAdapter.class, type = Date.class)
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 

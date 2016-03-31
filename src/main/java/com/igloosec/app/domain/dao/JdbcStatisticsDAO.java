@@ -54,7 +54,7 @@ public class JdbcStatisticsDAO implements StatisticsDAO {
             TemperatureResponse temperature = new TemperatureResponse();
 
             temperature.setAgentcode((String)row.get("agentcode"));
-            temperature.setTime((Date)row.get("time"));
+            temperature.setTime(((Date)row.get("time")).getTime());
             temperature.setDw((Integer)row.get("dw"));
             temperature.setType((String)row.get("type"));
             temperature.setVal((Double)row.get("val"));
@@ -88,7 +88,7 @@ public class JdbcStatisticsDAO implements StatisticsDAO {
             HumidityResponse humidity = new HumidityResponse();
 
             humidity.setAgentcode((String)row.get("agentcode"));
-            humidity.setTime((Date)row.get("time"));
+            humidity.setTime(((Date)row.get("time")).getTime());
             humidity.setDw((Integer)row.get("dw"));
             humidity.setType((String)row.get("type"));
             humidity.setVal((Double)row.get("val"));
@@ -152,7 +152,7 @@ public class JdbcStatisticsDAO implements StatisticsDAO {
             flux.setName((String)row.get("AGENTNAME"));
             flux.setMax((double)row.get("Max"));
             flux.setMin((double)row.get("Min"));
-            flux.setTime((Date)row.get("Time"));
+            flux.setTime(((Date)row.get("Time")).getTime());
             flux.setVal(flux.getMax() - flux.getMin());
 
             fluxList.add(flux);
