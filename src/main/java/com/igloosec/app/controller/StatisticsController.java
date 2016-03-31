@@ -69,15 +69,26 @@ public class StatisticsController {
 
 		return new ResponseEntity<Humidities>(humidities, HttpStatus.OK);
 	}
-//
-//	@RequestMapping(value = "/weight/{buildNo}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public ResponseEntity<Reports> getWeightList(@PathVariable String buildNo) throws DtoValidationException {
-//
-//
-//		return new ResponseEntity<Reports>(null, HttpStatus.OK);
-//	}
-//
+
+	@RequestMapping(value = "/weight/{buildNo}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<Weights> getWeightList(@PathVariable String buildNo) throws DtoValidationException {
+		List<Weight> weightList = new ArrayList<>();
+
+		weightList = statService.getWeightList(buildNo);
+		LOG.error("tempListSize: " + weightList.size());
+		Weights weights = new Weights();
+		weights.setWeight(weightList);
+
+		if (buildNo.equals("1")) {
+			weights.setAgentDescs(getAgentDesc(buildNo, "weight"));
+		} else if (buildNo.equals("2")) {
+			weights.setAgentDescs(getAgentDesc(buildNo, "weight"));
+		}
+
+		return new ResponseEntity<Weights>(weights, HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/flux/{buildNo}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Fluxes> getFluxList(@PathVariable String buildNo) throws DtoValidationException {
