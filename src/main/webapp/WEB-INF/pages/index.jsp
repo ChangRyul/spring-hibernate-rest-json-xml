@@ -72,7 +72,11 @@
 Highcharts.setOptions({
     lang: {
         thousandsSep: ','
+    },
+    global: {
+        useUTC: false
     }
+
 });
 var dongs = {
     "1" : [
@@ -189,7 +193,7 @@ function renderTemp_hum(element, dong, obj){
     $.getJSON("/stat/temperature/" + dong + ".json",
         function (data) {
             var agent_code = obj.agent_code;
-            var temp_array = []
+            var temp_array = [];
             $.each(data.Temperatures.temperature, function(key, value){
                 if(agent_code === value.agentcode){
                     temp_array.push([value.time, value.val]);
@@ -199,7 +203,7 @@ function renderTemp_hum(element, dong, obj){
             var series = {
                 "name": "Temperature",
                 "data": temp_array,
-//                "color": "#9E8833"
+                "color": "#ED561B"
             }
 
             $("#temp2_" + obj.agent_code).highcharts({
@@ -287,8 +291,7 @@ function renderTemp_hum(element, dong, obj){
     $.getJSON("/stat/humidity/" + dong + ".json",
         function (data) {
             var agent_code = obj.agent_code;
-            var temp_array = []
-            console.log(data)
+            var temp_array = [];
             $.each(data.Humidities.humidity, function(key, value){
                 if(agent_code === value.agentcode){
                     temp_array.push([value.time, value.val]);
@@ -362,7 +365,6 @@ function renderTemp_hum(element, dong, obj){
                 series: [series]
             });
 
-            console.log(series)
             var lastest_value = 0;
             try {
                 lastest_value = series.data[series.data.length -1][1];
@@ -414,12 +416,14 @@ function renderWeight(element, dong, obj){
             var series = {
                 "name": "Weight",
                 "data": temp_array,
+                "color": "#D28137"
 //                "pointWidth": 30
             }
             var standard_series = {
                 "name": "권장",
                 "type": "line",
-                "data": standard_array
+                "data": standard_array,
+                "color": "#434348"
             }
 
             element.find(".weight1").highcharts({
@@ -451,17 +455,29 @@ function renderWeight(element, dong, obj){
                     pointFormat: '{point.x:%m-%d}: {point.y:.1f} g'
                 },
                 legend: {
-                    enabled: false
+                    enabled: true,
+                    align: 'left',
+                    backgroundColor: '#FFFFFF',
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    layout: 'vertical',
+                    verticalAlign: 'top',
+                    floating:true,
+                    x: 70,
+//                    y: 100,
+                    shadow: true
                 },
                 plotOptions: {
                     column: {
                         dataLabels: {
                             enabled: true,
-                            format: '{point.y:,.1f} g',
+                            format: '{point.y:,.0f} L',
                             rotation: -90,
                             color: '#FFFFFF',
                             align: 'right',
-                            y: 10
+                            y: 10,
+                            allowOverlap:true,
+                            overflow: "none"
                         }
                     }
                 },
@@ -539,7 +555,17 @@ function renderFlux(element, dong, obj){
                     pointFormat: '{point.x:%m-%d}: {point.y:,.0f} L'
                 },
                 legend: {
-                    enabled: false
+                    enabled: true,
+                    align: 'left',
+                    backgroundColor: '#FFFFFF',
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    layout: 'vertical',
+                    verticalAlign: 'top',
+                    floating:true,
+                    x: 70,
+//                    y: 100,
+                    shadow: true
                 },
                 plotOptions: {
                     column: {
@@ -551,9 +577,7 @@ function renderFlux(element, dong, obj){
                             align: 'right',
                             y: 10,
                             allowOverlap:true,
-//                            crop:false,
                             overflow: "none"
-
                         }
                     }
                 },
