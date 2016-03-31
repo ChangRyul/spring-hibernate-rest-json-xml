@@ -192,8 +192,7 @@ public class JdbcStatisticsDAO implements StatisticsDAO {
                 "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160323 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
                 "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160324 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
                 "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160325 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
-                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160326 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') " +
-                "";
+                "UNION ALL select agentcode, agentname, avg(CAST(coalesce(ext3, '0') AS real)), to_char(servertime, 'YYYY-MM-DD') from EVENT_EA_20160326 where subeventtype = 'EA007_E03_SE03' GROUP BY agentcode, agentname, to_char(servertime, 'YYYY-MM-DD') ";
 
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(query, new Object[]{});
 

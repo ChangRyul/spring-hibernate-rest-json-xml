@@ -108,6 +108,287 @@ public class StatisticsController {
 		return new ResponseEntity<Fluxes>(fluxes, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/standard", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<ChickManual> getStandardList() throws DtoValidationException {
+		List<Table1> table1List = new ArrayList<>();
+
+		Table1 table1 = new Table1();
+		table1.setDate(1);
+		table1.setWater(23);
+		table1.setWeight(40);
+		table1.setTemp(35);
+		table1.setHum(80);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(2);
+		table1.setWater(32);
+		table1.setWeight(40);
+		table1.setTemp(35);
+		table1.setHum(80);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(3);
+		table1.setWater(38);
+		table1.setWeight(40);
+		table1.setTemp(34);
+		table1.setHum(80);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(4);
+		table1.setWater(42);
+		table1.setWeight(40);
+		table1.setTemp(34);
+		table1.setHum(75);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(5);
+		table1.setWater(47);
+		table1.setWeight(40);
+		table1.setTemp(33);
+		table1.setHum(75);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(6);
+		table1.setWater(53);
+		table1.setWeight(40);
+		table1.setTemp(33);
+		table1.setHum(75);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(7);
+		table1.setWater(60);
+		table1.setWeight(195);
+		table1.setTemp(32);
+		table1.setHum(75);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(8);
+		table1.setWater(65);
+		table1.setWeight(195);
+		table1.setTemp(32);
+		table1.setHum(65);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(9);
+		table1.setWater(74);
+		table1.setWeight(195);
+		table1.setTemp(31);
+		table1.setHum(65);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(10);
+		table1.setWater(80);
+		table1.setWeight(195);
+		table1.setTemp(31);
+		table1.setHum(65);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(11);
+		table1.setWater(86);
+		table1.setWeight(195);
+		table1.setTemp(30);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(12);
+		table1.setWater(95);
+		table1.setWeight(195);
+		table1.setTemp(30);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(13);
+		table1.setWater(102);
+		table1.setWeight(195);
+		table1.setTemp(29);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(14);
+		table1.setWater(110);
+		table1.setWeight(195);
+		table1.setTemp(29);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(15);
+		table1.setWater(116);
+		table1.setWeight(508);
+		table1.setTemp(28);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(16);
+		table1.setWater(123);
+		table1.setWeight(558);
+		table1.setTemp(28);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(17);
+		table1.setWater(131);
+		table1.setWeight(612);
+		table1.setTemp(27);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(18);
+		table1.setWater(137);
+		table1.setWeight(667);
+		table1.setTemp(27);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(19);
+		table1.setWater(145);
+		table1.setWeight(721);
+		table1.setTemp(26);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(20);
+		table1.setWater(152);
+		table1.setWeight(780);
+		table1.setTemp(26);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(21);
+		table1.setWater(159);
+		table1.setWeight(844);
+		table1.setTemp(25);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(22);
+		table1.setWater(167);
+		table1.setWeight(903);
+		table1.setTemp(25);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(23);
+		table1.setWater(173);
+		table1.setWeight(971);
+		table1.setTemp(24);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(24);
+		table1.setWater(180);
+		table1.setWeight(1034);
+		table1.setTemp(24);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(25);
+		table1.setWater(188);
+		table1.setWeight(1102);
+		table1.setTemp(24);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(26);
+		table1.setWater(194);
+		table1.setWeight(1170);
+		table1.setTemp(24);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(27);
+		table1.setWater(201);
+		table1.setWeight(1238);
+		table1.setTemp(24);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(28);
+		table1.setWater(208);
+		table1.setWeight(1311);
+		table1.setTemp(24);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(29);
+		table1.setWater(214);
+		table1.setWeight(1379);
+		table1.setTemp(24);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		table1 = new Table1();
+		table1.setDate(30);
+		table1.setWater(222);
+		table1.setWeight(1452);
+		table1.setTemp(24);
+		table1.setHum(60);
+
+		table1List.add(table1);
+
+		ChickManual chickManual = new ChickManual();
+		chickManual.setTable1(table1List);
+
+		return new ResponseEntity<ChickManual>(chickManual, HttpStatus.OK);
+	}
+
 	private List<AgentDesc> getAgentDesc(String buildNo, String type) {
 		List<AgentDesc> agentDescs = new ArrayList<>();
 
