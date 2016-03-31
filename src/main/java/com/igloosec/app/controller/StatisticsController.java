@@ -75,13 +75,48 @@ public class StatisticsController {
 		return new ResponseEntity<Temperatures>(temperatures, HttpStatus.OK);
 	}
 
-//	@RequestMapping(value = "/humidity/{buildNo}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public ResponseEntity<Reports> getHumidityList(@PathVariable String buildNo) throws DtoValidationException {
-//
-//
-//		return new ResponseEntity<Reports>(null, HttpStatus.OK);
-//	}
+	@RequestMapping(value = "/humidity/{buildNo}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<Humidities> getHumidityList(@PathVariable String buildNo) throws DtoValidationException {
+		List<HumidityResponse> humidityResponseList = new ArrayList<>();
+
+		humidityResponseList = statService.getHumidityList(buildNo);
+		LOG.error("tempListSize: " + humidityResponseList.size());
+		Humidities humidities = new Humidities();
+		humidities.setHumidity(humidityResponseList);
+
+		List<AgentDesc> agentDescs = new ArrayList<>();
+
+		if (buildNo.equals("1")) {
+			AgentDesc agentDesc = new AgentDesc();
+			agentDesc.setName("1동 온습도1");
+			agentDesc.setCode("996FBB5D-7436-4A22-AF9D-C56504A2478B");
+
+			agentDescs.add(agentDesc);
+
+			agentDesc = new AgentDesc();
+			agentDesc.setName("1동 온습도2");
+			agentDesc.setCode("022F035D-DF75-4A9C-924E-DA61D82E3214");
+
+			agentDescs.add(agentDesc);
+			humidities.setAgentDescs(agentDescs);
+		} else if (buildNo.equals("2")) {
+			AgentDesc agentDesc = new AgentDesc();
+			agentDesc.setName("2동 온습도1");
+			agentDesc.setCode("10B18372-D3B9-4C2D-8B47-EE0165FE3A52");
+
+			agentDescs.add(agentDesc);
+
+			agentDesc = new AgentDesc();
+			agentDesc.setName("2동 온습도2");
+			agentDesc.setCode("68DAE242-41FB-4EF3-8528-A42AE45308FA");
+
+			agentDescs.add(agentDesc);
+			humidities.setAgentDescs(agentDescs);
+		}
+
+		return new ResponseEntity<Humidities>(humidities, HttpStatus.OK);
+	}
 //
 //	@RequestMapping(value = "/weight/{buildNo}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
 //	@ResponseStatus(HttpStatus.CREATED)

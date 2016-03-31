@@ -1,5 +1,6 @@
 package com.igloosec.app.domain.dao;
 
+import com.igloosec.app.dto.response.HumidityResponse;
 import com.igloosec.app.dto.response.TemperatureResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,8 +18,8 @@ import java.util.Map;
  * Created by User on 2016-03-31.
  */
 @Repository
-public class JdbcTemperatureDAO implements TemperatureDAO {
-    private static final Logger logger = LogManager.getLogger(JdbcTemperatureDAO.class);
+public class JdbcStatisticsDAO implements StatisticsDAO {
+    private static final Logger logger = LogManager.getLogger(JdbcStatisticsDAO.class);
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -60,5 +60,39 @@ public class JdbcTemperatureDAO implements TemperatureDAO {
         }
 
         return temperatureResponseList;
+    }
+
+    @Override
+    public List<HumidityResponse> getHumidityList(int buildNo) {
+        List<HumidityResponse> humidityResponseList = new ArrayList<>();
+
+        String query = "";
+
+        if (buildNo == 1) {
+            query = "SELECT time, dw, agentcode, type, val, unit FROM (SELECT * FROM ST_030_20160326) sttable " +
+                    "where upper(agentcode) in ('996FBB5D-7436-4A22-AF9D-C56504A2478B', '022F035D-DF75-4A9C-924E-DA61D82E3214') " +
+                    "and time BETWEEN to_timestamp('2016-03-26 00:00:00','yyyy-mm-dd HH24:mi:ss') AND to_timestamp('2016-03-26 23:59:00','yyyy-mm-dd HH24:mi:ss') and type = 'EA009'  order by agentcode, time";
+        } else if (buildNo == 2) {
+            query = "SELECT time, dw, agentcode, type, val, unit FROM (SELECT * FROM ST_030_20160326) sttable " +
+                    "where upper(agentcode) in ('10B18372-D3B9-4C2D-8B47-EE0165FE3A52', '68DAE242-41FB-4EF3-8528-A42AE45308FA') " +
+                    "and time BETWEEN to_timestamp('2016-03-26 00:00:00','yyyy-mm-dd HH24:mi:ss') AND to_timestamp('2016-03-26 23:59:00','yyyy-mm-dd HH24:mi:ss') and type = 'EA009'  order by agentcode, time";
+        }
+
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query, new Object[]{});
+
+        for (Map<String, Object> row : rows) {
+            HumidityResponse humidity = new HumidityResponse();
+
+            humidity.setAgentcode((String)row.get("agentcode"));
+            humidity.setTime((Date)row.get("time"));
+            humidity.setDw((Integer)row.get("dw"));
+            humidity.setType((String)row.get("type"));
+            humidity.setVal((Double)row.get("val"));
+            humidity.setUnit((String)row.get("unit"));
+
+            humidityResponseList.add(humidity);
+        }
+
+        return humidityResponseList;
     }
 }
