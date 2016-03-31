@@ -224,6 +224,10 @@ function renderTemp_hum(element, dong, obj){
                 credits: {
                   enabled: false
                 },
+                navigator: {
+                    enabled: true,
+                    height: 15
+                },
                 yAxis: {
                     title: {
                         text: 'Temperature (℃)'
@@ -320,6 +324,10 @@ function renderTemp_hum(element, dong, obj){
                 },
                 credits: {
                     enabled: false
+                },
+                navigator: {
+                    enabled: true,
+                    height: 15
                 },
                 yAxis: {
                     title: {
@@ -439,7 +447,8 @@ function renderWeight(element, dong, obj){
                         month: '%m-%d',
                         day: '%m-%d',
                         year: '%Y'
-                    }
+                    },
+                    range: 10 * 24 * 3600 * 1000
                 },
                 credits: {
                     enabled: false
@@ -466,6 +475,10 @@ function renderWeight(element, dong, obj){
                     x: 70,
 //                    y: 100,
                     shadow: true
+                },
+                navigator: {
+                    enabled: true,
+                    height: 15
                 },
                 plotOptions: {
                     column: {
@@ -539,7 +552,8 @@ function renderFlux(element, dong, obj){
                         month: '%m-%d',
                         day: '%m-%d',
                         year: '%Y'
-                    }
+                    },
+                    range: 10 * 24 * 3600 * 1000
                 },
                 credits: {
                     enabled: false
@@ -566,6 +580,10 @@ function renderFlux(element, dong, obj){
                     x: 70,
 //                    y: 100,
                     shadow: true
+                },
+                navigator: {
+                    enabled: true,
+                    height: 15
                 },
                 plotOptions: {
                     column: {
