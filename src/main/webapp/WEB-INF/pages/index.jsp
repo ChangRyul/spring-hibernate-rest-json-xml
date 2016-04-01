@@ -190,7 +190,7 @@ function renderTemp_hum(element, dong, obj){
     element.find(".temp2").attr("id", "temp2_" + obj.agent_code)
     element.find(".hum2").attr("id", "hum2_" + obj.agent_code)
 
-    $.getJSON("/stat/temperature/" + dong + ".json",
+    $.getJSON("/Charmfre/stat/temperature/" + dong + ".json",
         function (data) {
             var agent_code = obj.agent_code;
             var temp_array = [];
@@ -292,7 +292,7 @@ function renderTemp_hum(element, dong, obj){
         }
     );
 
-    $.getJSON("/stat/humidity/" + dong + ".json",
+    $.getJSON("/Charmfre/stat/humidity/" + dong + ".json",
         function (data) {
             var agent_code = obj.agent_code;
             var temp_array = [];
@@ -397,14 +397,14 @@ function renderTemp_hum(element, dong, obj){
 function renderWeight(element, dong, obj){
 
     var temp_standard = {}
-    $.getJSON("/stat/standard.json",
+    $.getJSON("/Charmfre/stat/standard.json",
         function (data) {
             $.each(data.ChickManual.table1, function(i, v){
                 temp_standard[v.date] = v.weight;
             })
         }
     );
-    $.getJSON("/stat/weight/" + dong + ".json",
+    $.getJSON("/Charmfre/stat/weight/" + dong + ".json",
         function (data) {
             var agent_code = obj.agent_code;
             var temp_array = [];
@@ -503,7 +503,7 @@ function renderWeight(element, dong, obj){
 function renderFlux(element, dong, obj){
 
     var temp_standard = {}
-    $.getJSON("/stat/standard.json",
+    $.getJSON("/Charmfre/stat/standard.json",
             function (data) {
                 $.each(data.ChickManual.table1, function(i, v){
                     temp_standard[v.date] = v.water;
@@ -512,7 +512,7 @@ function renderFlux(element, dong, obj){
     );
 
 
-    $.getJSON("/stat/flux/" + dong + ".json",
+    $.getJSON("/Charmfre/stat/flux/" + dong + ".json",
         function (data) {
             var agent_code = obj.agent_code;
             var temp_array = [];
